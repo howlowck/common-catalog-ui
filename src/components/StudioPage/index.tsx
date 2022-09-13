@@ -1,11 +1,7 @@
-import type { Component } from 'solid-js';
+import type { Component } from "solid-js"
 
 const Comp: Component = () => {
-  return (
-    <div>
-      Studio Page!
-    </div>
-  );
-};
+  return <div>Studio Page!</div>
+}
 
-export default Comp;
+export default Comp
