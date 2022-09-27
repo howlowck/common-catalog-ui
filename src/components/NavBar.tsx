@@ -1,23 +1,29 @@
-import { Component, createEffect, createMemo, createSignal } from "solid-js"
+import {
+  Accessor,
+  Component,
+  createEffect,
+  createMemo,
+  createSignal,
+  Setter,
+  Signal,
+} from "solid-js"
 import { Link, NavLink, useMatch } from "@solidjs/router"
 import styles from "./styles.module.css"
-import logo from "../../assets/common-catalog.svg?url"
-import Moon from "../../assets/icons-outline/moon.svg?component"
-import Sun from "../../assets/icons-outline/sun.svg?component"
+import logo from "../assets/common-catalog.svg?url"
+import Moon from "../assets/icons-outline/moon.svg?component"
+import Sun from "../assets/icons-outline/sun.svg?component"
 
-declare const halfmoon: any
+type Props = {
+  isDarkMode: Accessor<boolean>
+  setIsDarkMode: Setter<boolean>
+}
 
-const Comp: Component = (props) => {
+const Comp: Component<Props> = (props) => {
   const match = (path: string) => {
     return useMatch(() => path)
   }
 
-  const [isDarkMode, setIsDarkMode] = createSignal(halfmoon.darkModeOn)
-
-  createEffect(() => {
-    isDarkMode()
-    halfmoon.toggleDarkMode()
-  })
+  const { isDarkMode, setIsDarkMode } = props
 
   return (
     <nav class="navbar d-flex">
@@ -38,11 +44,14 @@ const Comp: Component = (props) => {
           </Link>
         </li>
       </ul>
-      <button class="btn p-0 ml-5" onClick={() => setIsDarkMode(!isDarkMode())}>
-        {isDarkMode() ? (
-          <Moon style={{ stroke: "black", width: "20px", margin: "5px" }} />
+      <button
+        class="btn btn btn-square ml-5"
+        onClick={() => setIsDarkMode(!isDarkMode())}
+      >
+        {!isDarkMode() ? (
+          <Moon style={{ width: "100%", height: "100%", padding: "6" }} />
         ) : (
-          <Sun style={{ stroke: "white", width: "20px", margin: "5px" }} />
+          <Sun style={{ width: "100%", height: "100%", padding: "6" }} />
         )}
       </button>
       <div class="navbar-content d-md-none ml-auto">
