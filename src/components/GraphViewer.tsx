@@ -1,5 +1,6 @@
 import { Accessor, Component, onMount } from "solid-js"
-import cytoscape from "cytoscape"
+import cytoscape, { NodeDefinition } from "cytoscape"
+// import type { node } from "cytoscape"
 import popper from "cytoscape-popper"
 import fcose from "cytoscape-fcose"
 import tippy from "tippy.js"
@@ -212,7 +213,15 @@ const createGraph = (el: HTMLDivElement, content: string) => {
       ...conceptAddOnTargetEdges,
     ],
     layout: {
+      /// @ts-ignore
       name: "fcose",
+      nodeRepulsion: (node: any) => {
+        if (node.classes().includes("item")) {
+          return 50
+        }
+        return 100000
+      },
+      edgeElasticity: () => 0.025,
     },
     style: [
       {
